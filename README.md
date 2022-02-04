@@ -8,7 +8,8 @@ On the other hand i used [Unsplash](https://unsplash.com/) to integrate back gro
 
 Enter a **valid city name** that you want to browse a real time weather update.\
 Hit the `enter` key.\
-You should be getting the `City name`,`Country code`,`tempreture`,`weather-type`(Heavy rain,scatterd clouds...).
+You should be getting the `City name`,`Country code`,`tempreture`,`weather-type`(Heavy rain,scatterd clouds...).\
+Visit the [Weather-App deployed on Netlify](#)
 
 ### You want to play around with the code?
 
