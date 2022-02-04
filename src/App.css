@@ -1,38 +1,80 @@
-.App {
-  text-align: center;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+body {
+  font-family: "montseratt", sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.app {
+  /* background-image: url("./images/weather-icons.jpg"); */
+  background-size: cover;
+  background-position: bottom;
+  transition: 0.4 ease-out;
+  width: 100%;
+  height: 760px;
+ 
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+main {
+  min-height: 100vh;
+  background-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.2),
+    rgba(0, 0, 0, 0.75)
+  );
+  padding: 20px;
+}
+
+.search-box {
+  width: 100%;
+  margin: 0, 0, 75px;
+}
+
+.location-box .location{
+  color:#fff;
+  font-size: 1.8rem;
+  font-weight: 800;
+  text-align:center;
+  text-shadow: 3px 3px rgba(50, 50, 70, 0.5);
+  padding-top: 3%;
+  
+}
+.location-box .date{
+  color:#fff;
+  font-size: 1.3rem;
+  font-weight: 300;
+  font-style: italic;
+  text-align: center;
+  text-shadow: 2px 2px rgba(50, 50, 70, 0.5);
+}
+
+.weather-box{
+ text-align: center;
+
+}
+.weather-box .tempreture{
+  position: relative;
+  display: inline-block;
+  margin: 30px auto;
+  background-color:rgba(255,255, 255, 0.2);
+  border-radius: 5px;
+  padding: 15px 25px;
+  color: #fff;
+  font-size: 2.5rem;
+  font-weight: 900;
+  text-shadow: 2px 2px rgba(50, 50, 70, 0.5);
+}
+.weather-box .weather-type{
+  color:#fff;
+  font-size: 1.3rem;
+  font-weight: 700;
+  text-shadow: 3px 3px rgba(50, 50, 70, 0.5);
+  text-transform: capitalize;
 }
