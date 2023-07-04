@@ -1,4 +1,5 @@
 import {React, useState} from "react";
+import axios from "axios";
 import {dateGetter} from "./utils";
 import {InputBase, makeStyles} from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
@@ -10,7 +11,8 @@ const useStyles = makeStyles({
     backgroundColor: "#fff",
   },
   searchInput: {
-    opacity: "0.48",
+    opacity: "0.5",
+
     padding: "10px 18px",
     fontSize: "1.8rem",
     borderRadius: "8px",
@@ -32,6 +34,8 @@ function App() {
   const placeHolderImg = require("./images/weather-back.jpg");
   const [query, setQuery] = useState("");
   const [weather, setWeather] = useState({});
+  const [error, setError] = useState(false);
+
   const [backImg, setBackImg] = useState(placeHolderImg);
   const [icon, setIcon] = useState("");
 
@@ -41,31 +45,34 @@ function App() {
 
     // e.preventDefault();
     if (e.key === "Enter") {
-      const weatherRes = await fetch(
-        `${weatherAPI}weather?q=${query}&units=metric&appid=${process.env.REACT_APP_WEATHER_KEY}`
-      );
+      try {
+        const weatherRes = await axios.get(
+          `${weatherAPI}weather?q=${query}&units=metric&appid=${process.env.REACT_APP_WEATHER_KEY}`
+        );
 
-      const weatherData = await weatherRes.json();
-      const currentIcon = await weatherData.weather[0].icon;
+        const imgRes = await axios.get(
+          `${unsplashAPI}?query=${query}&client_id=${process.env.REACT_APP_UNSPLASH_KEY}`
+        );
 
-      setWeather(weatherData);
-      setIcon(currentIcon);
-
-      // corospending image
-      const imgRes = await fetch(
-        `${unsplashAPI}?query=${query}&client_id=${process.env.REACT_APP_UNSPLASH_KEY}`
-      );
-
-      const imgData = await imgRes.json();
-      //if picture is not found from the unsplash api then use the placeholder image
-      if (imgData.results.length === 0) {
-        setBackImg(placeHolderImg);
-      } else {
-        const currentImg = await (imgData.results[0].urls.regular ||
-          imgData.results[0].urls.raw);
-        setBackImg(currentImg);
+        setWeather(weatherRes.data);
+        if (weatherRes.data.weather) {
+          setIcon(weatherRes.data.weather[0].icon);
+        }
+        //if picture is not found from the unsplash api then use the placeholder image
+        if (imgRes.data.results.length === 0) {
+          setBackImg(placeHolderImg);
+        } else {
+          const currentImg =
+            imgRes.data.results[0].urls.regular ||
+            imgRes.data.results[0].urls.raw;
+          setBackImg(currentImg);
+        }
+      } catch (error) {
+        if (error.response?.status === 404) {
+          setError(true);
+        }
+        console.log(error);
       }
-
       setQuery("");
     }
   };
@@ -78,13 +85,16 @@ function App() {
             placeholder="Enter city name..."
             className={classes.searchInput}
             type="text"
-            onChange={(e) => setQuery(e.target.value)}
+            onChange={(e) => {
+              setQuery(e.target.value);
+              setError(false);
+            }}
             value={query}
             onKeyPress={handleSearch}
             startAdornment={<SearchIcon />}
           />
         </div>
-        {typeof weather.main != "undefined" ? (
+        {typeof weather.main != "undefined" && (
           <>
             <div className="location-box">
               <div className="location">
@@ -108,8 +118,13 @@ function App() {
               </div>
             </div>
           </>
-        ) : (
-          ""
+        )}
+        {error && (
+          <>
+            <div className="location-box">
+              <div className="location">Not found! enter valid city Name</div>
+            </div>
+          </>
         )}
       </main>
     </div>
