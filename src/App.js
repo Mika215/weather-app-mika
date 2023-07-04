@@ -10,12 +10,15 @@ const useStyles = makeStyles({
     backgroundColor: "#fff",
   },
   searchInput: {
-    opacity: "0.6",
+    opacity: "0.48",
     padding: "10px 18px",
     fontSize: "1.8rem",
     borderRadius: "8px",
+    backgroundColor: "#F9f8f8",
+
     "&:hover": {
       backgroundColor: "#F9f8f8",
+      opacity: "0.9",
     },
     //add margin between the search lenes and the text
     "& .MuiSvgIcon-root": {
@@ -26,7 +29,7 @@ const useStyles = makeStyles({
 
 function App() {
   const classes = useStyles();
-  const placeHolderImg = require("./images/place-h-img.jpg");
+  const placeHolderImg = require("./images/weather-back.jpg");
   const [query, setQuery] = useState("");
   const [weather, setWeather] = useState({});
   const [backImg, setBackImg] = useState(placeHolderImg);
